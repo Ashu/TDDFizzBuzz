@@ -10,14 +10,35 @@ import UIKit
 
 class ViewController: UIViewController {
 
-	var gameScore: Int?
+	var gameScore: Int? {
+		didSet {
+			guard let unwrappedScore = gameScore else {
+				print("gameScore is nil")
+				return
+			}
+			numberButton.setTitle("\(unwrappedScore)", for: .normal)
+		}
+	}
+	
 	var game: Game?
+	
+	@IBOutlet weak var numberButton: UIButton!
+	@IBOutlet weak var fizzButton: UIButton!
+	@IBOutlet weak var buzzButton: UIButton!
+	@IBOutlet weak var fizzBuzzButton: UIButton!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
-		gameScore = 0
+
 		game = Game()
+		
+		guard let checkedGame = game else {
+			print("Game is nil")
+			return
+		}
+		
+		gameScore = checkedGame.score
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -25,7 +46,7 @@ class ViewController: UIViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
-	func play(move: String) {
+	func play(move: Move) {
 		guard let unwrappedGame = game else {
 			print("Game is nil!")
 			return
@@ -35,5 +56,16 @@ class ViewController: UIViewController {
 		gameScore = response.score
 	}
 
+	@IBAction func buttonTapped(_ sender: UIButton) {
+		if sender == numberButton {
+			play(move: .number)
+		}else if sender == fizzButton {
+			play(move: .fizz)
+		}else if sender == buzzButton {
+			play(move: .buzz)
+		}else {
+			play(move: .fizzBuzz)
+		}
+	}
 }
 
