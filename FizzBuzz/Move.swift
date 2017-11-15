@@ -8,9 +8,15 @@
 
 import Foundation
 
-enum Move {
+enum Moves {
 	case number
 	case fizz
 	case buzz
 	case fizzBuzz
+	case endGame
+}
+
+struct MoveResponse {
+	let rightMove: Bool
+	let score: Int
 }

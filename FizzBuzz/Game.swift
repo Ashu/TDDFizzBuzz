@@ -8,25 +8,44 @@
 
 import Foundation
 
-class Game {
-	var score: Int
-	var brain: Brain
+class Game: NSObject {
 	
-	init() {
+	static let sharedInstance = Game()
+	
+	var score: Int
+	let brain: Brain!
+	let memory: GameMemory!
+	
+	
+	override init() {
 		score = 0
 		brain = Brain()
+		memory = GameMemory()
+		super.init()
 	}
 	
-	func play(move: Move) -> (right: Bool, score: Int) {
+	func play(_ move: Moves) -> MoveResponse {
+		let newScore = score + 1
 		
-		let result = brain.check(number: score + 1)
-		
-		if result == move {
-			score += 1
-			return (true, score)
+		if move == brain.check(number: newScore) {
+			score = newScore
+			return MoveResponse(rightMove: true, score: score)
 		} else {
-			return (false, score)
+			memory.storeScore(score)
+			return MoveResponse(rightMove: false, score: score)
 		}
-		
+	}
+	
+	func reset() -> Int {
+		score = 0
+		return score
+	}
+	
+	func getHighScore() -> Int {
+		return memory.getHighScore()
+	}
+	
+	func saveScore() {
+		memory.saveScores()
 	}
 }

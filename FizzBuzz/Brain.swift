@@ -26,7 +26,7 @@ class Brain {
 		return isDivisibleBy(divisor: 15, number: number)
 	}
 	
-	func check(number: Int) -> Move {
+	func check(number: Int) -> Moves {
 		if isDivisibleByFifteen(number: number) {
 			return .fizzBuzz
 		}else if isDivisibleByFive(number: number) {
