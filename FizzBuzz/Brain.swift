@@ -27,15 +27,25 @@ class Brain {
 	}
 	
 	func check(number: Int) -> Moves {
-		if isDivisibleByFifteen(number: number) {
-			return .fizzBuzz
-		}else if isDivisibleByFive(number: number) {
-			return .buzz
-		}else if isDivisibleByThree(number: number) {
-			return .fizz
-		}else {
-			return .number
+		switch (isDivisibleByThree(number: number),isDivisibleByFive(number: number)) {
+			case (true,false):
+				return .fizz
+			case (false, true):
+				return .buzz
+			case (true, true):
+				return .fizzBuzz
+			case (false,false):
+				return .number
 		}
+//		if isDivisibleByFifteen(number: number) {
+//			return .fizzBuzz
+//		}else if isDivisibleByFive(number: number) {
+//			return .buzz
+//		}else if isDivisibleByThree(number: number) {
+//			return .fizz
+//		}else {
+//			return .number
+//		}
 		
 	}
 }
